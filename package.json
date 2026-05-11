@@ -1,0 +1,9 @@
+{
+  "name": "pwa-demos",
+  "version": "1.0.0",
+  "description": "PWA Demos – Taller Parte 2",
+  "scripts": {
+    "start": "npx serve .",
+    "icons": "node generate-icons.js"
+  }
+}

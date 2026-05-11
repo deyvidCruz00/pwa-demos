@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PWA Demos – Taller Parte 2</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- iOS / Safari PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PWA Demos" />
+  <link rel="apple-touch-icon" href="./img/icons/icon-192x192.svg" />
+
+  <!-- SEO básico -->
+  <meta name="description" content="Demos de capacidades modernas de PWA: File System, Auth, Face Detection, Barcode, Screen Capture, Audio, Orientation, Motion, Multitouch y View Transitions." />
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1> PWA Demos</h1>
+    <p>Taller Parte 2 – What PWA Can Do Today</p>
+  </header>
+
+  <main>
+
+    <!-- ── 1. File System ─────────────────────────────────────────────── -->
+    <section class="card" id="sec-filesystem">
+      <h2> File System</h2>
+      <p>Lee y escribe archivos directamente en el sistema de archivos del dispositivo usando la <strong>File System Access API</strong>.</p>
+      <div class="btn-group">
+        <button id="fs-open-btn">Abrir archivo</button>
+        <button id="fs-save-btn">Guardar archivo</button>
+      </div>
+      <textarea id="fs-content" placeholder="El contenido del archivo aparecerá aquí..." rows="6"></textarea>
+      <p id="fs-status" class="status"></p>
+    </section>
+
+    <!-- ── 2. Authentication (WebAuthn) ──────────────────────────────── -->
+    <section class="card" id="sec-auth">
+      <h2> Authentication (WebAuthn)</h2>
+      <p>Registra y autentica con <strong>biometría / PIN</strong> del dispositivo usando la Web Authentication API.</p>
+      <div class="btn-group">
+        <button id="auth-register-btn">Registrar credencial</button>
+        <button id="auth-login-btn">Autenticar</button>
+      </div>
+      <p id="auth-status" class="status"></p>
+    </section>
+
+    <!-- ── 3. Face Detection ──────────────────────────────────────────── -->
+    <section class="card" id="sec-face">
+      <h2> Face Detection</h2>
+      <p>Detecta rostros en tiempo real usando <strong>face-api.js</strong> (TensorFlow.js).</p>
+      <div class="btn-group">
+        <button id="face-start-btn">Iniciar cámara</button>
+        <button id="face-stop-btn" disabled>Detener</button>
+      </div>
+      <div class="video-wrap">
+        <video id="face-video" autoplay muted playsinline></video>
+        <canvas id="face-canvas"></canvas>
+      </div>
+      <p id="face-status" class="status"></p>
+    </section>
+
+    <!-- ── 4. Barcode Detection ───────────────────────────────────────── -->
+    <section class="card" id="sec-barcode">
+      <h2> Barcode Detection</h2>
+      <p>Escanea códigos QR y de barras con la <strong>Shape Detection API</strong>.</p>
+      <div class="btn-group">
+        <button id="barcode-start-btn">Iniciar escáner</button>
+        <button id="barcode-stop-btn" disabled>Detener</button>
+      </div>
+      <div class="video-wrap">
+        <video id="barcode-video" autoplay muted playsinline></video>
+        <canvas id="barcode-canvas"></canvas>
+      </div>
+      <p id="barcode-result" class="status"></p>
+    </section>
+
+    <!-- ── 5. Screen Capture ──────────────────────────────────────────── -->
+    <section class="card" id="sec-screen">
+      <h2> Screen Capture</h2>
+      <p>Captura la pantalla, una ventana o una pestaña usando la <strong>Screen Capture API</strong>.</p>
+      <div class="btn-group">
+        <button id="screen-start-btn">Iniciar captura</button>
+        <button id="screen-stop-btn" disabled>Detener</button>
+        <button id="screen-shot-btn" disabled>Tomar screenshot</button>
+      </div>
+      <video id="screen-video" autoplay muted playsinline style="display:none;width:100%;border-radius:8px;"></video>
+      <img id="screen-img" alt="Screenshot" style="display:none;width:100%;border-radius:8px;margin-top:8px;" />
+      <p id="screen-status" class="status"></p>
+    </section>
+
+    <!-- ── 6. Audio Recording ─────────────────────────────────────────── -->
+    <section class="card" id="sec-audio">
+      <h2> Audio Recording</h2>
+      <p>Graba audio desde el micrófono usando <strong>MediaRecorder API</strong>.</p>
+      <div class="btn-group">
+        <button id="audio-start-btn">Grabar</button>
+        <button id="audio-stop-btn" disabled>Detener</button>
+      </div>
+      <div id="audio-list"></div>
+      <p id="audio-status" class="status"></p>
+    </section>
+
+    <!-- ── 7. Orientation ─────────────────────────────────────────────── -->
+    <section class="card" id="sec-orientation">
+      <h2> Orientation</h2>
+      <p>Lee la orientación del dispositivo usando <strong>DeviceOrientationEvent</strong>.</p>
+      <button id="orientation-btn">Activar orientación</button>
+      <div class="orientation-display">
+        <div class="orient-item"><span>Alpha (Z)</span><strong id="ori-alpha">–</strong></div>
+        <div class="orient-item"><span>Beta (X)</span><strong id="ori-beta">–</strong></div>
+        <div class="orient-item"><span>Gamma (Y)</span><strong id="ori-gamma">–</strong></div>
+      </div>
+      <div class="phone-visual">
+        <div id="phone-box"></div>
+      </div>
+      <p id="orientation-status" class="status"></p>
+    </section>
+
+    <!-- ── 8. Motion ──────────────────────────────────────────────────── -->
+    <section class="card" id="sec-motion">
+      <h2> Motion</h2>
+      <p>Lee la aceleración del dispositivo usando <strong>DeviceMotionEvent</strong>.</p>
+      <button id="motion-btn">Activar movimiento</button>
+      <div class="orientation-display">
+        <div class="orient-item"><span>Accel X</span><strong id="mot-x">–</strong></div>
+        <div class="orient-item"><span>Accel Y</span><strong id="mot-y">–</strong></div>
+        <div class="orient-item"><span>Accel Z</span><strong id="mot-z">–</strong></div>
+      </div>
+      <div class="motion-bar-wrap">
+        <div class="motion-bar-label">Intensidad</div>
+        <div class="motion-bar-bg"><div id="motion-bar" class="motion-bar-fill"></div></div>
+      </div>
+      <p id="motion-status" class="status"></p>
+    </section>
+
+    <!-- ── 9. Multitouch ──────────────────────────────────────────────── -->
+    <section class="card" id="sec-touch">
+      <h2> Multitouch</h2>
+      <p>Detecta múltiples puntos de contacto simultáneos usando <strong>Touch Events</strong>.</p>
+      <div id="touch-area">
+        <span>Toca aquí con varios dedos</span>
+      </div>
+      <p id="touch-status" class="status">Puntos activos: 0</p>
+    </section>
+
+    <!-- ── 10. View Transition ─────────────────────────────────────────── -->
+    <section class="card" id="sec-vt">
+      <h2> View Transition</h2>
+      <p>Animaciones de transición entre vistas usando la <strong>View Transitions API</strong>.</p>
+      <div class="btn-group">
+        <button id="vt-btn1" class="vt-btn active-vt">Vista 1</button>
+        <button id="vt-btn2" class="vt-btn">Vista 2</button>
+        <button id="vt-btn3" class="vt-btn">Vista 3</button>
+      </div>
+      <div id="vt-content" class="vt-box">
+        <div id="vt-view" class="vt-view vt-view-1">
+          <h3> Vista 1</h3>
+          <p>Contenido de la primera vista. Haz clic en los botones para ver la transición animada.</p>
+        </div>
+      </div>
+      <p id="vt-status" class="status"></p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>PWA Demos – Taller Parte 2 &nbsp;|&nbsp; Web APIs modernas</p>
+  </footer>
+
+  <script src="./js/vendor/face-api.min.js"></script>
+  <script src="./js/filesystem.js"></script>
+  <script src="./js/authentication.js"></script>
+  <script src="./js/face-detection.js"></script>
+  <script src="./js/barcode-detection.js"></script>
+  <script src="./js/screen-capture.js"></script>
+  <script src="./js/audio-recording.js"></script>
+  <script src="./js/orientation.js"></script>
+  <script src="./js/motion.js"></script>
+  <script src="./js/multitouch.js"></script>
+  <script src="./js/view-transition.js"></script>
+
+  <!-- Registro del Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('[SW] Registrado:', reg.scope))
+          .catch(err => console.warn('[SW] Error al registrar:', err));
+      });
+    }
+  </script>
+</body>
+</html>

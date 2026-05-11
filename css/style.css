@@ -1,0 +1,245 @@
+/* ── Reset & Base ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:    #2563eb;
+  --blue-dk: #1d4ed8;
+  --green:   #16a34a;
+  --red:     #dc2626;
+  --gray-bg: #f1f5f9;
+  --gray-bd: #cbd5e1;
+  --text:    #1e293b;
+  --radius:  12px;
+  --shadow:  0 2px 12px rgba(0,0,0,.10);
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--gray-bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+header {
+  background: var(--blue);
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+header h1 { font-size: 1.8rem; }
+header p  { opacity: .85; font-size: .95rem; margin-top: .25rem; }
+
+/* ── Main grid ───────────────────────────────────────────────────────── */
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Card ────────────────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.card h2 { font-size: 1.1rem; color: var(--blue); }
+.card p   { font-size: .88rem; color: #475569; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn-group { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+button {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: .5rem 1rem;
+  font-size: .88rem;
+  cursor: pointer;
+  transition: background .15s;
+}
+button:hover:not(:disabled) { background: var(--blue-dk); }
+button:disabled { background: #94a3b8; cursor: not-allowed; }
+
+/* ── Status text ─────────────────────────────────────────────────────── */
+.status {
+  font-size: .82rem;
+  min-height: 1.2em;
+  color: #64748b;
+  word-break: break-all;
+}
+.status.ok  { color: var(--green); }
+.status.err { color: var(--red); }
+
+/* ── Textarea ────────────────────────────────────────────────────────── */
+textarea {
+  width: 100%;
+  border: 1px solid var(--gray-bd);
+  border-radius: 8px;
+  padding: .6rem;
+  font-size: .88rem;
+  resize: vertical;
+  font-family: monospace;
+}
+
+/* ── Video wrap (face / barcode) ─────────────────────────────────────── */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+.video-wrap video,
+.video-wrap canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.video-wrap canvas { pointer-events: none; }
+
+/* ── Orientation display ─────────────────────────────────────────────── */
+.orientation-display {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+.orient-item {
+  flex: 1;
+  min-width: 80px;
+  background: var(--gray-bg);
+  border-radius: 8px;
+  padding: .5rem;
+  text-align: center;
+  font-size: .82rem;
+}
+.orient-item span { display: block; color: #64748b; }
+.orient-item strong { font-size: 1.1rem; color: var(--blue); }
+
+/* ── Phone visual (orientation) ──────────────────────────────────────── */
+.phone-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+#phone-box {
+  font-size: 3rem;
+  transition: transform .1s linear;
+  display: inline-block;
+}
+
+/* ── Motion bar ──────────────────────────────────────────────────────── */
+.motion-bar-wrap { display: flex; flex-direction: column; gap: .3rem; }
+.motion-bar-label { font-size: .8rem; color: #64748b; }
+.motion-bar-bg {
+  width: 100%;
+  height: 14px;
+  background: var(--gray-bg);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.motion-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--green), var(--blue));
+  border-radius: 99px;
+  transition: width .1s;
+}
+
+/* ── Touch area ──────────────────────────────────────────────────────── */
+#touch-area {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 2px dashed var(--blue);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .9rem;
+  color: #3b82f6;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+}
+.touch-dot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(37,99,235,.55);
+  border: 2px solid var(--blue);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: bold;
+}
+
+/* ── View Transition ─────────────────────────────────────────────────── */
+.vt-btn { background: #e2e8f0; color: var(--text); }
+.vt-btn.active-vt { background: var(--blue); color: #fff; }
+
+.vt-box {
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.vt-view {
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.vt-view h3 { font-size: 1.1rem; }
+.vt-view p  { font-size: .88rem; }
+
+.vt-view-1 { background: linear-gradient(135deg, #dbeafe, #eff6ff); }
+.vt-view-2 { background: linear-gradient(135deg, #dcfce7, #f0fdf4); }
+.vt-view-3 { background: linear-gradient(135deg, #fef9c3, #fefce8); }
+
+/* View Transition animation (fallback via CSS class) */
+@keyframes vt-fade-in  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes vt-fade-out { from { opacity: 1; } to { opacity: 0; transform: translateY(-12px); } }
+
+.vt-enter { animation: vt-fade-in  .3s ease forwards; }
+.vt-leave { animation: vt-fade-out .25s ease forwards; }
+
+/* Native View Transitions API */
+::view-transition-old(vt-main) { animation: vt-fade-out .25s ease forwards; }
+::view-transition-new(vt-main) { animation: vt-fade-in  .3s  ease forwards; }
+#vt-view { view-transition-name: vt-main; }
+
+/* ── Audio list ──────────────────────────────────────────────────────── */
+#audio-list { display: flex; flex-direction: column; gap: .5rem; }
+#audio-list audio { width: 100%; }
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: .82rem;
+  color: #94a3b8;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  main { padding: .75rem; gap: .75rem; }
+  header h1 { font-size: 1.4rem; }
+}
